@@ -58,12 +58,15 @@ class Bmodule {
                   ),
                   ListTile(
                       trailing: GestureDetector(
-                    child: Icon(Icons.send),
+                    child: Icon(Icons.send,color: Colors.blueAccent),
                     onTap: () {
+                      if(task.newTaskField.text != ''){
+                      
                       task.increment();
                       task.addTask();
-                      
                       Navigator.pop(context);
+                      }
+                      
                     },
                   ))
                 ],
