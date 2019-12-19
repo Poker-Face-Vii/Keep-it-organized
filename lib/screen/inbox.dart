@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
-class InboxPage extends StatefulWidget {
+
+class InboxPage extends StatelessWidget {
+  final TaskManage task = TaskManage();
 
 
-  @override
-  _InboxPageState createState() => _InboxPageState();
-}
-
-class _InboxPageState extends State<InboxPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: new AppBar(
-        title: Text('KIO'),
-      ),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text('hello ${1 + index}'),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
-        onPressed: (){},)
-    );
+    return Observer(
+        builder: (_) => Scaffold(
+              appBar: new AppBar(title: Text('KIO'),),
+              body: ListView.builder(
+                itemCount: task.count,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text('ff'),
+                  );
+                },
+              ),
+              floatingActionButton: FloatingActionButton(child: Icon(Icons.add),onPressed: task.increment,),
+            ));
   }
 }

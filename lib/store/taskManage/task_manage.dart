@@ -9,10 +9,11 @@ class TaskManage = _TaskManage with _$TaskManage;
 // The store-class
 abstract class _TaskManage with Store {
   @observable
-  int taskCounter = 0;
+  int count = 0;
+  
 
   @action
   void increment() {
-    taskCounter++;
+    count++;
   }
 }

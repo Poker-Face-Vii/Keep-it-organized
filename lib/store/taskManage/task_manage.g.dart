@@ -9,21 +9,21 @@ part of 'task_manage.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TaskManage on _TaskManage, Store {
-  final _$taskCounterAtom = Atom(name: '_TaskManage.taskCounter');
+  final _$countAtom = Atom(name: '_TaskManage.count');
 
   @override
-  int get taskCounter {
-    _$taskCounterAtom.context.enforceReadPolicy(_$taskCounterAtom);
-    _$taskCounterAtom.reportObserved();
-    return super.taskCounter;
+  int get count {
+    _$countAtom.context.enforceReadPolicy(_$countAtom);
+    _$countAtom.reportObserved();
+    return super.count;
   }
 
   @override
-  set taskCounter(int value) {
-    _$taskCounterAtom.context.conditionallyRunInAction(() {
-      super.taskCounter = value;
-      _$taskCounterAtom.reportChanged();
-    }, _$taskCounterAtom, name: '${_$taskCounterAtom.name}_set');
+  set count(int value) {
+    _$countAtom.context.conditionallyRunInAction(() {
+      super.count = value;
+      _$countAtom.reportChanged();
+    }, _$countAtom, name: '${_$countAtom.name}_set');
   }
 
   final _$_TaskManageActionController = ActionController(name: '_TaskManage');
