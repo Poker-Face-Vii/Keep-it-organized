@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 // Include generated file
@@ -10,10 +11,20 @@ class TaskManage = _TaskManage with _$TaskManage;
 abstract class _TaskManage with Store {
   @observable
   int count = 0;
-  
+  String title;
+  final TextEditingController newTaskField = TextEditingController();
 
   @action
   void increment() {
     count++;
+  }
+
+  @action
+  
+  void addTask() {
+    title = newTaskField.text;
+    newTaskField.text ='';
+    
+    
   }
 }
