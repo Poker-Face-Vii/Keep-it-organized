@@ -16,7 +16,7 @@ class InboxPage extends StatelessWidget {
                 itemCount: _task.count,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    title: Text('ff'),
+                    title: Text(_task.title),
                   );
                 },
               ),
@@ -32,6 +32,11 @@ class InboxPage extends StatelessWidget {
 class Bmodule {
   final TaskManage task;
   Bmodule(this.task);
+  
+
+  
+  
+
   mainBoottomSheet(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -47,7 +52,8 @@ class Bmodule {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   TextField(
-                    decoration: InputDecoration(hintText: 'adddrss'),
+                    controller: task.newTaskField,
+                    decoration: InputDecoration(hintText: 'Task'),
                     autofocus: true,
                   ),
                   ListTile(
@@ -55,9 +61,9 @@ class Bmodule {
                     child: Icon(Icons.send),
                     onTap: () {
                       task.increment();
+                      task.addTask();
+                      
                       Navigator.pop(context);
-                      
-                      
                     },
                   ))
                 ],
