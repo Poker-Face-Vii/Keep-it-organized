@@ -4,8 +4,6 @@ import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
 class InboxPage extends StatelessWidget {
   final TaskManage _task = TaskManage();
-  B_module modal = new B_module();
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,27 +21,47 @@ class InboxPage extends StatelessWidget {
                 },
               ),
               floatingActionButton: FloatingActionButton(
-                child: Icon(Icons.add),
-                onPressed: () => modal.mainBoottomSheet(context),
-              ),
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    Bmodule(_task).mainBoottomSheet(context);
+                  }),
             ));
   }
 }
 
-class B_module {
+class Bmodule {
+  final TaskManage task;
+  Bmodule(this.task);
   mainBoottomSheet(BuildContext context) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
-        builder: (BuildContext context) {
-          return Container(height: 300.0,padding: EdgeInsets.all(10.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[Row(
+        builder: (context) {
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Container(
+              padding: EdgeInsets.only(left: 15.0, right: 15.0, top: 5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Container( child: TextField(autofocus: true,cursorColor: Colors.black,)),
-                  Container(child: Icon(Icons.send),)
+                  TextField(
+                    decoration: InputDecoration(hintText: 'adddrss'),
+                    autofocus: true,
+                  ),
+                  ListTile(
+                      trailing: GestureDetector(
+                    child: Icon(Icons.send),
+                    onTap: () {
+                      task.increment();
+                      Navigator.pop(context);
+                      
+                      
+                    },
+                  ))
                 ],
-              )],
+              ),
             ),
           );
         });
