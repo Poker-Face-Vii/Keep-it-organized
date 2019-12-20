@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:hive/hive.dart';
 import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
 class InboxPage extends StatelessWidget {
@@ -7,35 +8,56 @@ class InboxPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-        builder: (_) => Scaffold(
-              appBar: new AppBar(
-                title: Text('KIO'),
-              ),
-              body: ListView.builder(
-                itemCount: _task.count,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text(_task.title),
-                  );
-                },
-              ),
-              floatingActionButton: FloatingActionButton(
-                  child: Icon(Icons.add),
-                  onPressed: () {
-                    Bmodule(_task).mainBoottomSheet(context);
-                  }),
-            ));
+    return FutureBuilder(
+      future: Hive.openBox('opentask'),
+      builder: (BuildContext contex, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return Observer(
+                builder: (_) => Scaffold(
+                      appBar: new AppBar(
+                        title: Text('KIO'),
+                      ),
+                      body: ListView.builder(
+                        itemCount: _task.count == 0
+                            ? Hive.box('opentask').length
+                            : _task.count,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            leading: GestureDetector(
+                              child: Icon(Icons.delete),
+                              onTap: () {
+                                Hive.box('opentask').delete(index);
+                              },
+                            ),
+                            title:
+                                // Text(_task.listTitle[index]),
+                                Text(Hive.box('opentask').get(index) == null
+                                    ? "null"
+                                    : Hive.box('opentask').get(index)),
+                          );
+                        },
+                      ),
+                      floatingActionButton: FloatingActionButton(
+                          child: Icon(Icons.add),
+                          onPressed: () {
+                            Bmodule(_task).mainBoottomSheet(context);
+                          }),
+                    ));
+          }
+        } else {
+          return Scaffold();
+        }
+      },
+    );
   }
 }
 
 class Bmodule {
   final TaskManage task;
   Bmodule(this.task);
-  
-
-  
-  
 
   mainBoottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -58,15 +80,14 @@ class Bmodule {
                   ),
                   ListTile(
                       trailing: GestureDetector(
-                    child: Icon(Icons.send,color: Colors.blueAccent),
+                    child: Icon(Icons.send, color: Colors.blueAccent),
                     onTap: () {
-                      if(task.newTaskField.text != ''){
-                      
-                      task.increment();
-                      task.addTask();
-                      Navigator.pop(context);
+                      if (task.newTaskField.text != '') {
+                        task.increment();
+                        task.addTask();
+                        addTasktoDB(task.title);
+                        Navigator.pop(context);
                       }
-                      
                     },
                   ))
                 ],
@@ -75,4 +96,9 @@ class Bmodule {
           );
         });
   }
+}
+
+void addTasktoDB(value) {
+  print(value);
+  Hive.box('opentask').add(value);
 }
