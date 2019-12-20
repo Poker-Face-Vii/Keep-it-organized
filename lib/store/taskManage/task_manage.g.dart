@@ -37,4 +37,14 @@ mixin _$TaskManage on _TaskManage, Store {
       _$_TaskManageActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  void addTask() {
+    final _$actionInfo = _$_TaskManageActionController.startAction();
+    try {
+      return super.addTask();
+    } finally {
+      _$_TaskManageActionController.endAction(_$actionInfo);
+    }
+  }
 }

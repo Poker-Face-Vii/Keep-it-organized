@@ -9,7 +9,7 @@ class InboxPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Hive.openBox('opentask'),
+      future: Hive.openBox('mytasks'),
       builder: (BuildContext contex, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -18,25 +18,28 @@ class InboxPage extends StatelessWidget {
             return Observer(
                 builder: (_) => Scaffold(
                       appBar: new AppBar(
+                        leading: GestureDetector(child: Icon(Icons.refresh),onTap: (){
+                          
+                        },),
                         title: Text('KIO'),
                       ),
                       body: ListView.builder(
                         itemCount: _task.count == 0
-                            ? Hive.box('opentask').length
+                            ? Hive.box('mytasks').length
                             : _task.count,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
                             leading: GestureDetector(
                               child: Icon(Icons.delete),
                               onTap: () {
-                                Hive.box('opentask').delete(index);
+                                Hive.box('mytasks').delete(index);
                               },
                             ),
                             title:
                                 // Text(_task.listTitle[index]),
-                                Text(Hive.box('opentask').get(index) == null
+                                Text(Hive.box('mytasks').get(index) == null
                                     ? "null"
-                                    : Hive.box('opentask').get(index)),
+                                    : Hive.box('mytasks').get(index)),
                           );
                         },
                       ),
@@ -100,5 +103,5 @@ class Bmodule {
 
 void addTasktoDB(value) {
   print(value);
-  Hive.box('opentask').add(value);
+  Hive.box('mytasks').add(value);
 }
