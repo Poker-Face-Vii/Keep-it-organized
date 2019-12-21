@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:keep_it_organized/database/myTask_db.dart';
 import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
 class InboxPage extends StatelessWidget {
@@ -9,7 +11,7 @@ class InboxPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Hive.openBox('mytasks'),
+      future: Hive.openBox('customtaskk'),
       builder: (BuildContext contex, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -18,31 +20,9 @@ class InboxPage extends StatelessWidget {
             return Observer(
                 builder: (_) => Scaffold(
                       appBar: new AppBar(
-                        leading: GestureDetector(child: Icon(Icons.refresh),onTap: (){
-                          
-                        },),
                         title: Text('KIO'),
                       ),
-                      body: ListView.builder(
-                        itemCount: _task.count == 0
-                            ? Hive.box('mytasks').length
-                            : _task.count,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            leading: GestureDetector(
-                              child: Icon(Icons.delete),
-                              onTap: () {
-                                Hive.box('mytasks').delete(index);
-                              },
-                            ),
-                            title:
-                                // Text(_task.listTitle[index]),
-                                Text(Hive.box('mytasks').get(index) == null
-                                    ? "null"
-                                    : Hive.box('mytasks').get(index)),
-                          );
-                        },
-                      ),
+                      body: _boxWatcher(),
                       floatingActionButton: FloatingActionButton(
                           child: Icon(Icons.add),
                           onPressed: () {
@@ -82,23 +62,53 @@ class Bmodule {
                     autofocus: true,
                   ),
                   ListTile(
+                      leading: IconButton(
+                        icon: Icon(
+                          Icons.add,
+                          color: Colors.red,
+                        ),
+                        onPressed: () {},
+                      ),
                       trailing: GestureDetector(
-                    child: Icon(Icons.send, color: Colors.blueAccent),
-                    onTap: () {
-                      if (task.newTaskField.text != '') {
-                        task.increment();
-                        task.addTask();
-                        addTasktoDB(task.title);
-                        Navigator.pop(context);
-                      }
-                    },
-                  ))
+                        child: Icon(Icons.send, color: Colors.blueAccent),
+                        onTap: () {
+                          task.addTask();
+                          Hive.box('customtaskk').add(task.title);
+                          Navigator.pop(context);
+                        },
+                      ))
                 ],
               ),
             ),
           );
         });
   }
+}
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// !this is Box Watch Builder Widget
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Widget _boxWatcher() {
+  return WatchBoxBuilder(
+    box: Hive.box('customtaskk'),
+    builder: (context, contactsBox) {
+      return ListView.builder(
+        itemCount: contactsBox.length,
+        itemBuilder: (BuildContext context, int index) {
+          final contact = contactsBox.getAt(index) ;
+
+          return ListTile(
+            title: Text(contact),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () => contactsBox.deleteAt(index),
+            ),
+          );
+        },
+      );
+    },
+  );
 }
 
 void addTasktoDB(value) {
