@@ -10,13 +10,26 @@ class TestSt = _TestSt with _$TestSt;
 
 // The store-class
 abstract class _TestSt with Store {
+  
   @observable
   String title;
   final TextEditingController tCo = TextEditingController();
+    
 
   @action
-  void increment() {}
+  void debug(context) {
+    
+    title = tCo.text;
+    tCo.clear();
+    print(title);
+  }
 
   @action
-  void addTask() {}
+  void addTasktoDB() {
+    title = tCo.text;
+    tCo.clear();
+  
+  
+}
+
 }

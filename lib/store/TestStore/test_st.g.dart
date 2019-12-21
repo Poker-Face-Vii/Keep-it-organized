@@ -29,20 +29,20 @@ mixin _$TestSt on _TestSt, Store {
   final _$_TestStActionController = ActionController(name: '_TestSt');
 
   @override
-  void increment() {
+  void debug(dynamic context) {
     final _$actionInfo = _$_TestStActionController.startAction();
     try {
-      return super.increment();
+      return super.debug(context);
     } finally {
       _$_TestStActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void addTask() {
+  void addTasktoDB() {
     final _$actionInfo = _$_TestStActionController.startAction();
     try {
-      return super.addTask();
+      return super.addTasktoDB();
     } finally {
       _$_TestStActionController.endAction(_$actionInfo);
     }
