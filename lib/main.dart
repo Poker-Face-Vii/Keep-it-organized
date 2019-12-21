@@ -1,10 +1,11 @@
 // ?   Dependemcy
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-
 import 'package:path_provider/path_provider.dart' as path_provider;
 // ?   S C R E E N
+import 'package:keep_it_organized/screen/TestPage.dart';
 import 'package:keep_it_organized/screen/inbox.dart';
+import 'package:keep_it_organized/screen/Addpage.dart';
 
 
 void main() async{
@@ -29,19 +30,11 @@ class KeepItSimple extends StatelessWidget {
       initialRoute: '/',
       routes: {
         
-        '/': (context) => InboxPage(),
-        // '/': (context) => Testpage(),
+        // '/': (context) => InboxPage(),
+        '/': (context) => Testpage(),
+        '/add': (context) => AddPage(),
+        '/other':(context)=> InboxPage(),
       },
     );
-  }
-}
-class Testpage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(
-        title: Text('ddd'),
-        ),
-        );
   }
 }
