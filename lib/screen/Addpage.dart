@@ -4,24 +4,60 @@ import 'package:hive/hive.dart';
 import 'package:keep_it_organized/Components/_Drawer.dart';
 import 'package:keep_it_organized/store/TestStore/test_st.dart';
 
-class AddPage extends StatelessWidget {
+class AddPage extends StatefulWidget {
   // DB name
+  @override
+  _AddPageState createState() => _AddPageState();
+}
+
+class _AddPageState extends State<AddPage> {
   final String _dbname = 'Todo_task';
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Hive.openBox('Todo_task'),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        // my local varibales
-        // '******************************************
-        final _dbt = Hive.box(_dbname);
-        // '******************************************
-        // End varibles part
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
-            return _Myscreen(_dbt);
+        // my local varibales
+        // '******************************************
+        final _dbt = Hive.box(_dbname);
+        final _formKey = GlobalKey<FormState>();
+        final TestSt _state = TestSt();
+        // '******************************************
+        // End varibles part
+            return Observer(
+      builder: (_) {
+        return Scaffold(
+            drawer: my_menu(context, 2),
+            appBar: AppBar(
+              title: Text('Add new task'),
+            ),
+            body: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  TextField( controller: _state.tCo,
+                  ),
+                  SizedBox(height: 25.0,),
+                  IconButton(
+                    icon: Icon(Icons.check),
+                    onPressed: () {
+                      // _state.debug(context);
+                      
+                      _state.addTasktoDB();
+                      _dbt.add(_state.title);
+                      debugPrint('the lenght : ${_dbt.length}');
+                    },
+                  )
+                ],
+              ),
+            ));
+      },
+    );
           }
         } else {
           return Scaffold(
@@ -37,40 +73,11 @@ class AddPage extends StatelessWidget {
       },
     );
   }
-}
 
-class _Myscreen extends StatelessWidget {
-  final _dbt;
-  _Myscreen(this._dbt);
-  final _formKey = GlobalKey<FormState>();
-  final TestSt _task = TestSt();
-  
   @override
-  Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        return Scaffold(
-            drawer: my_menu(context, 2),
-            appBar: AppBar(
-              title: Text('Add new task'),
-            ),
-            body: Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  TextField( controller: _task.tCo,
-                  ),
-                  SizedBox(height: 25.0,),
-                  IconButton(
-                    icon: Icon(Icons.check),
-                    onPressed: () {
-                      
-                    },
-                  )
-                ],
-              ),
-            ));
-      },
-    );
+  void dispose() {
+    Hive.box('Todo_task').close();
+    super.dispose();
   }
 }
+

@@ -31,7 +31,7 @@ class KeepItSimple extends StatelessWidget {
       routes: {
         
         // '/': (context) => InboxPage(),
-        '/': (context) => Testpage(),
+        '/': (context) => TestPage(),
         '/add': (context) => AddPage(),
         '/other':(context)=> InboxPage(),
       },
