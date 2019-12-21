@@ -6,21 +6,21 @@ part of 'myTask_db.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class mytaskAdapter extends TypeAdapter<mytask> {
+class MytaskAdapter extends TypeAdapter<Mytask> {
   @override
-  mytask read(BinaryReader reader) {
+  Mytask read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return mytask(
+    return Mytask(
       fields[0] as String,
       fields[1] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, mytask obj) {
+  void write(BinaryWriter writer, Mytask obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
