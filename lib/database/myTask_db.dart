@@ -5,7 +5,6 @@ part 'myTask_db.g.dart';
 class Mytask {
   @HiveField(0)
   final String title;
-  @HiveField(1)
-  final int  complited;
-  Mytask(this.title,this.complited);
+
+  Mytask(this.title);
 }
