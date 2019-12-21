@@ -11,20 +11,16 @@ class AddPage extends StatelessWidget {
     return FutureBuilder(
       future: Hive.openBox('Todo_task'),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-      // my local varibales
-      // '******************************************
+        // my local varibales
+        // '******************************************
         final _dbt = Hive.box(_dbname);
-      // '******************************************
+        // '******************************************
         // End varibles part
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
-            return Observer(
-              builder: (_){
-                return Scaffold();
-              },
-            );
+            return _Myscreen(_dbt);
           }
         } else {
           return Scaffold(
@@ -37,6 +33,39 @@ class AddPage extends StatelessWidget {
             ),
           );
         }
+      },
+    );
+  }
+}
+
+class _Myscreen extends StatelessWidget {
+  final _dbt;
+  _Myscreen(this._dbt);
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (_) {
+        return Scaffold(
+            drawer: my_menu(context, 2),
+            appBar: AppBar(
+              title: Text('Add new task'),
+            ),
+            body: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  TextField(),
+                  SizedBox(height: 25.0,),
+                  IconButton(
+                    icon: Icon(Icons.check),
+                    onPressed: () {
+                      
+                    },
+                  )
+                ],
+              ),
+            ));
       },
     );
   }
