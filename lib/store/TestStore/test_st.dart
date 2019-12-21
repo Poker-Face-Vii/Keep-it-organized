@@ -14,6 +14,7 @@ abstract class _TestSt with Store {
   @observable
   String title;
   final TextEditingController tCo = TextEditingController();
+  int counter;
     
 
   @action
