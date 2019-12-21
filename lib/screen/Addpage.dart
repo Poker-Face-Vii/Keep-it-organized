@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:hive/hive.dart';
 import 'package:keep_it_organized/Components/_Drawer.dart';
+import 'package:keep_it_organized/store/TestStore/test_st.dart';
 
 class AddPage extends StatelessWidget {
   // DB name
@@ -42,6 +43,8 @@ class _Myscreen extends StatelessWidget {
   final _dbt;
   _Myscreen(this._dbt);
   final _formKey = GlobalKey<FormState>();
+  final TestSt _task = TestSt();
+  
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -55,7 +58,8 @@ class _Myscreen extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  TextField(),
+                  TextField( controller: _task.tCo,
+                  ),
                   SizedBox(height: 25.0,),
                   IconButton(
                     icon: Icon(Icons.check),
