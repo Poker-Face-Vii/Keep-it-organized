@@ -15,7 +15,7 @@ class MytaskAdapter extends TypeAdapter<Mytask> {
     };
     return Mytask(
       fields[0] as String,
-      fields[1] as String,
+      fields[1] as bool,
       lable: fields[2] as String,
     );
   }

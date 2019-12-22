@@ -8,7 +8,7 @@ class Mytask {
   @HiveField(0)
   final String title;
   @HiveField(1)
-  final String status;
+  final bool status;
   @HiveField(2)
   final String lable;
 
