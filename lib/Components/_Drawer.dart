@@ -6,7 +6,7 @@ Drawer my_menu(context, selected) {
       children: <Widget>[
         FlatButton(
           child: Text(
-            'Home',
+            'Index',
             style: TextStyle(
                 color: selected == 1 ? Colors.blueAccent : Colors.black),
           ),
