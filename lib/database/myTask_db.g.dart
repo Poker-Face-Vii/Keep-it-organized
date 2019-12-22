@@ -14,18 +14,21 @@ class MytaskAdapter extends TypeAdapter<Mytask> {
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Mytask(
-      fields[0] as int,
+      fields[0] as String,
       fields[1] as String,
+      lable: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Mytask obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.title);
+      ..write(obj.status)
+      ..writeByte(2)
+      ..write(obj.lable);
   }
 }

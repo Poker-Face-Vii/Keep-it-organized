@@ -3,12 +3,15 @@ part 'myTask_db.g.dart';
 
 @HiveType()
 class Mytask {
+  
+
   @HiveField(0)
-  final int id;
-
-  @HiveField(1)
   final String title;
+  @HiveField(1)
+  final String status;
+  @HiveField(2)
+  final String lable;
 
-  Mytask(this.id,this.title);
+  Mytask(this.title ,this.status,{this.lable});
 
 }
