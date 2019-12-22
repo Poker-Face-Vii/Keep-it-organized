@@ -77,11 +77,10 @@ class Bmodule {
                       trailing: GestureDetector(
                         child: Icon(Icons.send, color: Colors.blueAccent),
                         onTap: () {
-                          if(task.newTaskField.text != ''){
-
-                          task.addTask();
-                          Hive.box('customtaskk').add(Mytask(1,task.title));
-                          Navigator.pop(context);
+                          if (task.newTaskField.text != '') {
+                            task.addTask();
+                            Hive.box('customtaskk').add(Mytask(1, task.title));
+                            Navigator.pop(context);
                           }
                         },
                       ))
@@ -93,33 +92,61 @@ class Bmodule {
   }
 }
 
+//
+//
+//
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// !this is Box Watch Builder Widget
+// !      Box WATCH BUILDER Widget
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 Widget _boxWatcher() {
-  return WatchBoxBuilder(
-    box: Hive.box('customtaskk'),
-    builder: (context, contactsBox) {
-      return ListView.builder(
-        itemCount: contactsBox.length,
-        itemBuilder: (BuildContext context, int index) {
-          final contact = contactsBox.getAt(index)  ;
+  return Observer(
+    builder: (_) => WatchBoxBuilder(
+      box: Hive.box('customtaskk'),
+      builder: (context, contactsBox) {
+        return ListView.builder(
+          itemCount: contactsBox.length,
+          itemBuilder: (BuildContext context, int index) {
+            final contact = contactsBox.getAt(index);
 
-          return ListTile(
-            title: Text(contact.title),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () => contactsBox.deleteAt(index),
-            ),
-          );
-        },
-      );
-    },
+            return ListTile(
+              leading: alaki(),
+              title: Text(contact.title),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => contactsBox.deleteAt(index),
+              ),
+            );
+          },
+        );
+      },
+    ),
   );
 }
 
-void addTasktoDB(value) {
-  print(value);
-  Hive.box('mytasks').add(value);
+//
+//
+//
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// !        CHECK BOX class
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class alaki extends StatefulWidget {
+  alaki({Key key}) : super(key: key);
+
+  @override
+  _alakiState createState() => _alakiState();
+}
+
+class _alakiState extends State<alaki> {
+  bool statecheck = false;
+  @override
+  Widget build(BuildContext context) {
+    return Checkbox(
+      value: statecheck,
+      onChanged: (bool value) {
+        setState(() {
+          statecheck = value;
+        });
+      },
+    );
+  }
 }

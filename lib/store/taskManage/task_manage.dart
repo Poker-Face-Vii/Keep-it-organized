@@ -15,6 +15,7 @@ abstract class _TaskManage with Store {
   int count = 0;
   String title;
   List listTitle =[];
+  
   final TextEditingController newTaskField = TextEditingController();
   
 
