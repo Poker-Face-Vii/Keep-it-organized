@@ -120,7 +120,6 @@ class __WatchBoxTaskState extends State<_WatchBoxTask> {
             itemCount: contactsBox.length,
             itemBuilder: (BuildContext context, int index) {
               final contact = contactsBox.getAt(index);
-              
 
               return ListTile(
                 leading: Checkbox(
@@ -129,7 +128,7 @@ class __WatchBoxTaskState extends State<_WatchBoxTask> {
                     setState(() {
                       contactsBox.putAt(
                           index, Mytask(contact.title, !contact.status));
-                      
+
                       print(contact.status);
                     });
                   },
