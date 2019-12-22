@@ -67,14 +67,22 @@ class Bmodule {
                           Icons.add,
                           color: Colors.red,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          // Hive.box('personBox').add('sdsdd');
+                          // print(Hive.box('personBox').length);
+                          // print(Hive.box('personBox').getAt(1).title);
+                          // print(Hive.box('customtaskk').getAt(0).title);
+                        },
                       ),
                       trailing: GestureDetector(
                         child: Icon(Icons.send, color: Colors.blueAccent),
                         onTap: () {
+                          if(task.newTaskField.text != ''){
+
                           task.addTask();
-                          Hive.box('customtaskk').add(task.title);
+                          Hive.box('customtaskk').add(Mytask(1,task.title));
                           Navigator.pop(context);
+                          }
                         },
                       ))
                 ],
@@ -96,10 +104,10 @@ Widget _boxWatcher() {
       return ListView.builder(
         itemCount: contactsBox.length,
         itemBuilder: (BuildContext context, int index) {
-          final contact = contactsBox.getAt(index) ;
+          final contact = contactsBox.getAt(index)  ;
 
           return ListTile(
-            title: Text(contact),
+            title: Text(contact.title),
             trailing: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () => contactsBox.deleteAt(index),

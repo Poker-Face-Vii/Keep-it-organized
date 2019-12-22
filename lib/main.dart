@@ -7,11 +7,16 @@ import 'package:keep_it_organized/screen/TestPage.dart';
 import 'package:keep_it_organized/screen/inbox.dart';
 import 'package:keep_it_organized/screen/Addpage.dart';
 
+import 'package:keep_it_organized/database/myTask_db.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory = await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(MytaskAdapter(), 0);
+ 
+  
   runApp(KeepItSimple());
   
 }
