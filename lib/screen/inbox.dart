@@ -11,7 +11,7 @@ class InboxPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Hive.openBox('customtaskk'),
+      future: Hive.openBox<Mytask>('customtaskk'),
       builder: (BuildContext contex, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -22,7 +22,7 @@ class InboxPage extends StatelessWidget {
                       appBar: new AppBar(
                         title: Text('KIO'),
                       ),
-                      body: _boxWatcher(),
+                      body: _WatchBoxTask(),
                       floatingActionButton: FloatingActionButton(
                           child: Icon(Icons.add),
                           onPressed: () {
@@ -64,14 +64,14 @@ class Bmodule {
                   ListTile(
                       leading: IconButton(
                         icon: Icon(
-                          Icons.add,
+                          Icons.delete_sweep,
                           color: Colors.red,
                         ),
                         onPressed: () {
                           // Hive.box('personBox').add('sdsdd');
                           // print(Hive.box('personBox').length);
-                          // print(Hive.box('personBox').getAt(1).title);
-                          // print(Hive.box('customtaskk').getAt(0).title);
+                          print(Hive.box<Mytask>('customtaskk').length);
+                          // Hive.box('customtaskk').clear();
                         },
                       ),
                       trailing: GestureDetector(
@@ -79,7 +79,9 @@ class Bmodule {
                         onTap: () {
                           if (task.newTaskField.text != '') {
                             task.addTask();
-                            Hive.box('customtaskk').add(Mytask(1, task.title));
+                            Hive.box<Mytask>('customtaskk')
+                                .add(Mytask(task.title, false, lable: 'dd'));
+
                             Navigator.pop(context);
                           }
                         },
@@ -96,57 +98,57 @@ class Bmodule {
 //
 //
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// !      Box WATCH BUILDER Widget
+// !      Box WATCH BUILDER Class
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Widget _boxWatcher() {
-  return Observer(
-    builder: (_) => WatchBoxBuilder(
-      box: Hive.box('customtaskk'),
-      builder: (context, contactsBox) {
-        return ListView.builder(
-          itemCount: contactsBox.length,
-          itemBuilder: (BuildContext context, int index) {
-            final contact = contactsBox.getAt(index);
-
-            return ListTile(
-              leading: alaki(),
-              title: Text(contact.title),
-              trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => contactsBox.deleteAt(index),
-              ),
-            );
-          },
-        );
-      },
-    ),
-  );
-}
-
-//
-//
-//
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// !        CHECK BOX class
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class alaki extends StatefulWidget {
-  alaki({Key key}) : super(key: key);
+class _WatchBoxTask extends StatefulWidget {
+  _WatchBoxTask({Key key}) : super(key: key);
 
   @override
-  _alakiState createState() => _alakiState();
+  __WatchBoxTaskState createState() => __WatchBoxTaskState();
 }
 
-class _alakiState extends State<alaki> {
+class __WatchBoxTaskState extends State<_WatchBoxTask> {
   bool statecheck = false;
+  final TaskManage _task = TaskManage();
   @override
   Widget build(BuildContext context) {
-    return Checkbox(
-      value: statecheck,
-      onChanged: (bool value) {
-        setState(() {
-          statecheck = value;
-        });
-      },
+    return Observer(
+      builder: (_) => WatchBoxBuilder(
+        box: Hive.box<Mytask>('customtaskk'),
+        builder: (context, contactsBox) {
+          return ListView.builder(
+            itemCount: contactsBox.length,
+            itemBuilder: (BuildContext context, int index) {
+              final contact = contactsBox.getAt(index);
+              
+
+              return ListTile(
+                leading: Checkbox(
+                  value: contact.status,
+                  onChanged: (bool value) {
+                    setState(() {
+                      contactsBox.putAt(
+                          index, Mytask(contact.title, !contact.status));
+                      
+                      print(contact.status);
+                    });
+                  },
+                ),
+                title: Text(contact.title),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => contactsBox.deleteAt(index),
+                ),
+              );
+            },
+          );
+        },
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

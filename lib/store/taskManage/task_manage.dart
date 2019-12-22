@@ -15,7 +15,7 @@ abstract class _TaskManage with Store {
   int count = 0;
   String title;
   List listTitle =[];
-  
+  bool booli =true;
   final TextEditingController newTaskField = TextEditingController();
   
 
