@@ -53,7 +53,7 @@ class _AddPageState extends State<AddPage> {
                               // _state.debug(context);
 
                               _state.addTasktoDB();
-                              _dbt.add(Mytask(1,_state.title));
+                              // _dbt.add(Mytask(_state.title));
                               debugPrint('the lenght : ${_dbt.length}');
                             },
                           ),
