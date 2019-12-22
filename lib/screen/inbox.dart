@@ -1,12 +1,21 @@
+// ?     Dependemcy
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+// ?     C O M P O N E N T S
+import 'package:keep_it_organized/Components/_Drawer.dart';
+// ?     S T A T E S
 import 'package:keep_it_organized/database/myTask_db.dart';
+// ?     DATA  _  BASE   Modul
 import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
 class InboxPage extends StatelessWidget {
+  //
+  // CLASS variables +++++++++++++++++++++++++++++++++++++++++
   final TaskManage _task = TaskManage();
+  //
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +26,11 @@ class InboxPage extends StatelessWidget {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
+            // !! this the body Scafold CODE__________________________________________
+            // !
             return Observer(
                 builder: (_) => Scaffold(
+                      drawer: my_menu(context, 1),
                       appBar: new AppBar(
                         title: Text('KIO'),
                       ),
@@ -29,6 +41,7 @@ class InboxPage extends StatelessWidget {
                             Bmodule(_task).mainBoottomSheet(context);
                           }),
                     ));
+            // ! _____________________________________________________________________
           }
         } else {
           return Scaffold();
@@ -38,9 +51,19 @@ class InboxPage extends StatelessWidget {
   }
 }
 
+//
+//
+//
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// ! THIS IS BOTTOM SHEET Modal &&&& AND   N E W - T A S K
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Bmodule {
+  //
+  // CLASS COSTRUCTOR  ++++++++++++++++++++++++++++++++++++++++++++
   final TaskManage task;
   Bmodule(this.task);
+  //
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   mainBoottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -68,9 +91,8 @@ class Bmodule {
                           color: Colors.red,
                         ),
                         onPressed: () {
-                          // Hive.box('personBox').add('sdsdd');
-                          // print(Hive.box('personBox').length);
-                          print(Hive.box<Mytask>('customtaskk').length);
+                          // todo: THE FUNCTION SHULD BE WRITE
+                          // print(Hive.box<Mytask>('customtaskk').length);
                           // Hive.box('customtaskk').clear();
                         },
                       ),
@@ -128,8 +150,7 @@ class __WatchBoxTaskState extends State<_WatchBoxTask> {
                     setState(() {
                       contactsBox.putAt(
                           index, Mytask(contact.title, !contact.status));
-
-                      print(contact.status);
+                      // print(contact.status);
                     });
                   },
                 ),
