@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
 // ?     C O M P O N E N T S
 import 'package:keep_it_organized/Components/_Drawer.dart';
+
 // ?     DATA  _  BASE   Modul
 import 'package:keep_it_organized/database/myTask_db.dart';
+
 // ?     S T A T E S
 import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
@@ -26,7 +29,6 @@ class InboxPage extends StatelessWidget {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
-            
             // !! this the body Scafold CODE__________________________________________
             // !
             return Observer(
@@ -131,7 +133,6 @@ class _WatchBoxTask extends StatefulWidget {
 }
 
 class __WatchBoxTaskState extends State<_WatchBoxTask> {
-  
   final TaskManage _task = TaskManage();
   @override
   Widget build(BuildContext context) {
@@ -151,13 +152,13 @@ class __WatchBoxTaskState extends State<_WatchBoxTask> {
                     setState(() {
                       contactsBox.putAt(
                           index, Mytask(contact.title, !contact.status));
-                          Hive.box<Mytask>('Complited').add(Mytask(contact.title,!contact.status ));
+                      Hive.box<Mytask>('Complited')
+                          .add(Mytask(contact.title, !contact.status));
                       // print(contact.status);
-                          if (contact.status == false){
-                            contactsBox.deleteAt(index);
-                          }
+                      if (contact.status == false) {
+                        contactsBox.deleteAt(index);
+                      }
                     });
-                    
                   },
                 ),
                 title: Text(contact.title),

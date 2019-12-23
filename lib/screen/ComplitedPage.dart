@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:keep_it_organized/Components/_Drawer.dart';
-import 'package:keep_it_organized/database/myTask_db.dart';
-import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
+// ?     C O M P O N E N T S
+import 'package:keep_it_organized/Components/_Drawer.dart';
+
+// ?     DATA  _  BASE   Modul
+import 'package:keep_it_organized/database/myTask_db.dart';
+
+// ?     S T A T E S
+import 'package:keep_it_organized/store/taskManage/task_manage.dart';
 
 class ComplitedPage extends StatelessWidget {
   //
@@ -24,7 +29,6 @@ class ComplitedPage extends StatelessWidget {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
-            
             // !! this the body Scafold CODE__________________________________________
             // !
             return Observer(
@@ -34,7 +38,6 @@ class ComplitedPage extends StatelessWidget {
                         title: Text('KIO'),
                       ),
                       body: _BoxWatch(),
-                      
                     ));
             // ! _____________________________________________________________________
           }
@@ -45,28 +48,6 @@ class ComplitedPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //
 //
@@ -82,7 +63,6 @@ class _BoxWatch extends StatefulWidget {
 }
 
 class __BoxWatchState extends State<_BoxWatch> {
-  
   final TaskManage _task = TaskManage();
   @override
   Widget build(BuildContext context) {
@@ -105,10 +85,9 @@ class __BoxWatchState extends State<_BoxWatch> {
                       // print(contact.status);
                     });
                     setState(() {
-                          if (contact.status == false){
-                            contactsBox.deleteAt(index);
-                          }
-                      
+                      if (contact.status == false) {
+                        contactsBox.deleteAt(index);
+                      }
                     });
                   },
                 ),
