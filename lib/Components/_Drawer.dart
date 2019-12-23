@@ -15,12 +15,12 @@ Drawer my_menu(context, selected) {
         ),
         FlatButton(
           child: Text(
-            'Add',
+            'Complited',
             style: TextStyle(
                 color: selected == 2 ? Colors.blueAccent : Colors.black),
           ),
           onPressed: () =>
-              selected == 2 ? selected : Navigator.pushNamed(context, '/add'),
+              selected == 2 ? selected : Navigator.pushNamed(context, '/complited'),
         ),
         FlatButton(
           child: Text(
