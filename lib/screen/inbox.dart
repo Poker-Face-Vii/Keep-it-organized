@@ -26,6 +26,7 @@ class InboxPage extends StatelessWidget {
           if (snapshot.hasError) {
             return Text(snapshot.error.toString());
           } else {
+            
             // !! this the body Scafold CODE__________________________________________
             // !
             return Observer(
