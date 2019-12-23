@@ -121,7 +121,7 @@ class Bmodule {
 //
 //
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// !      Box WATCH BUILDER Class
+// !    Hive Box WATCH BUILDER Class
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class _WatchBoxTask extends StatefulWidget {
   _WatchBoxTask({Key key}) : super(key: key);
@@ -131,7 +131,7 @@ class _WatchBoxTask extends StatefulWidget {
 }
 
 class __WatchBoxTaskState extends State<_WatchBoxTask> {
-  bool statecheck = false;
+  
   final TaskManage _task = TaskManage();
   @override
   Widget build(BuildContext context) {
@@ -151,8 +151,13 @@ class __WatchBoxTaskState extends State<_WatchBoxTask> {
                     setState(() {
                       contactsBox.putAt(
                           index, Mytask(contact.title, !contact.status));
+                          Hive.box<Mytask>('Complited').add(Mytask(contact.title,!contact.status ));
                       // print(contact.status);
+                          if (contact.status == false){
+                            contactsBox.deleteAt(index);
+                          }
                     });
+                    
                   },
                 ),
                 title: Text(contact.title),
