@@ -35,7 +35,7 @@ class InboxPage extends StatelessWidget {
                 builder: (_) => Scaffold(
                       drawer: my_menu(context, 1),
                       appBar: new AppBar(
-                        title: Text('KIO'),
+                        title: Text('KIO',style: Theme.of(context).textTheme.title,),
                       ),
                       body: _WatchBoxTask(),
                       floatingActionButton: FloatingActionButton(
@@ -161,9 +161,9 @@ class __WatchBoxTaskState extends State<_WatchBoxTask> {
                     });
                   },
                 ),
-                title: Text(contact.title),
+                title: Text(contact.title,style: Theme.of(context).textTheme.body1,),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: Icon(Icons.delete,color: Color(0xffFF1744),),
                   onPressed: () => contactsBox.deleteAt(index),
                 ),
               );

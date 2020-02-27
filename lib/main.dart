@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 // ?   S C R E E N
 import 'package:keep_it_organized/screen/inbox.dart';
-import 'package:keep_it_organized/screen/Addpage.dart';
 import 'package:keep_it_organized/screen/ComplitedPage.dart';
 // ?     DATA  _  BASE   Modul
 import 'package:keep_it_organized/database/myTask_db.dart';
@@ -28,8 +27,15 @@ class KeepItSimple extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'KIO',
       theme: ThemeData(
+        fontFamily: 'work Sans',
+          brightness: Brightness.dark,
+          textTheme: TextTheme(
+            title: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),
+            body1: TextStyle(color: Colors.greenAccent[400],fontSize: 17),
+            body2: TextStyle(color: Colors.lightGreenAccent[400],fontSize: 17),
+          ),
           primaryColor: Colors.white,
-          scaffoldBackgroundColor: Color(0xffF1F3F4)),
+          scaffoldBackgroundColor: Color(0xff08063c)),
       initialRoute: '/',
       routes: {
         '/': (context) => InboxPage(),
